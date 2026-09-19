@@ -1,0 +1,62 @@
+import camion.*
+import cosas.*
+
+
+describe "metodos"{
+    test "cargar"{
+        camion.cargar(knightRider)
+        assert.equals([knightRider], camion.cosas())
+    }
+
+    test "cargaFallida"{
+        paqueteDeLadrillos.LadrillosACargar(10000000)
+        camion.cargar(paqueteDeLadrillos)
+        assert.equals([paqueteDeLadrillos], camion.cosas())
+    }
+
+    test "descargar"{
+        camion.cargar(knightRider)
+        camion.descargar(knightRider)
+        assert.equals([], camion.cosas())
+    }
+
+    test "descargaFallida"{
+        camion.descargar(paqueteDeLadrillos)
+        assert.equals([], camion.cosas())
+    }
+
+    test "pesoTotalTest"{
+        camion.cargar(bumblebee)
+        camion.cargar(bateriaAntiaerea)
+        assert.equals(2100, camion.pesoTotal())
+    }
+
+    test "excedidoDePesoTest"{
+        paqueteDeLadrillos.LadrillosACargar(10000000)
+        camion.cargar(paqueteDeLadrillos)
+        assert.that(camion.excedidoDePeso())
+    }
+
+    test "objetosPeligrososTest"{
+        camion.cargar(bumblebee)
+        camion.cargar(bateriaAntiaerea)
+        camion.cargar(knightRider)
+        assert.equals([bumblebee, bateriaAntiaerea], camion.objetosPeligrosos(10))
+    }
+
+    test "objetosMasPeligrososQueTest"{
+        camion.cargar(bumblebee)
+        camion.cargar(bateriaAntiaerea)
+        camion.cargar(knightRider)
+        assert.equals([], camion.objetosMasPeligrososQue(residuosRadioactivos))
+    }
+
+    test "puedeCircularEnRutaTest"{
+        camion.cargar(bumblebee)
+        camion.cargar(bateriaAntiaerea)
+        camion.cargar(knightRider)
+        assert.that(camion.puedeCircularEnRuta(10))
+    }
+}
+
+
